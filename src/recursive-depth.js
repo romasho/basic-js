@@ -13,8 +13,22 @@ import { NotImplementedError } from '../extensions/index.js';
  *
  */
 export default class DepthCalculator {
-  calculateDepth(/* arr */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  
+  calculateDepth(arr, count = 1) {
+    let currentDepth = count
+    for (let i = 0; i < arr.length; i++){
+      if (arr[i] instanceof Array) { 
+       let newCount = this.calculateDepth(arr[i], count++)
+       if (newCount > currentDepth) {currentDepth = newCount}
+      }
+      
+    } return currentDepth
   }
 }
+
+const Calc = new DepthCalculator()
+
+console.log(Calc.calculateDepth(([1, 2, 3, [8, [2]], 4, 5, []])))
+
+
+// node recursive-depth.js
