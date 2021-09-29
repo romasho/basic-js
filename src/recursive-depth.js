@@ -18,7 +18,7 @@ export default class DepthCalculator {
     let currentDepth = count
     for (let i = 0; i < arr.length; i++){
       if (arr[i] instanceof Array) { 
-       let newCount = this.calculateDepth(arr[i], count++)
+       let newCount = this.calculateDepth(arr[i], count+1)
        if (newCount > currentDepth) {currentDepth = newCount}
       }
       
@@ -26,9 +26,9 @@ export default class DepthCalculator {
   }
 }
 
-const Calc = new DepthCalculator()
+// const Calc = new DepthCalculator()
 
-console.log(Calc.calculateDepth(([1, 2, 3, [8, [2]], 4, 5, []])))
+// console.log(Calc.calculateDepth(([1, 2, 3, [8, [2]], 4, 5, []])))
 
 
 // node recursive-depth.js
