@@ -5,24 +5,40 @@ import { NotImplementedError } from '../extensions/index.js';
  * 
  */
 export default {
+  mas: [],
+  res: [],
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.mas.length
+    
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  addLink(value) {
+    this.mas.push(`( ${value} )`)
+    return this
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  removeLink(position) {
+    if (typeof position !== "number" || position > this.mas.length || position <= 0) {
+      this.mas = [];
+      throw new Error("You can't remove incorrect link!")}
+
+    if (position === this.mas.length) {
+      this.mas.pop()
+      return this
+    } else {
+       this.mas.splice(position-1, 1)
+       return this
+    }
   },
+
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.mas.reverse();
+    return this;
   },
+
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.res = this.mas.join(`~~`)
+    this.mas =[]
+    return this.res;
   }
 };
