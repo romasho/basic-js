@@ -20,12 +20,61 @@ import { NotImplementedError } from '../extensions/index.js';
  * 
  */
 export default class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+   
+  constructor(mode = true) {
+    this.mode = mode;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  
+ 
+  encrypt(text, key) {
+    if (!text || !key) {throw new Error ("Incorrect arguments!")}
+    let kf = Math.ceil(text.length / key.length);
+    key = key.toUpperCase().repeat(kf);
+    text = text.toUpperCase()
+    let codeA = 'A'.charCodeAt(0);
+    let abcCount = 26;
+  
+    let result = [];
+    let counterKey = 0
+    for (let i = 0; i < text.length; i++) {
+      if (text[i].match(/[A-Z]/)) {
+        let letterIdx = text.charCodeAt(i) - codeA;
+        let shift = key.charCodeAt(counterKey) - codeA;
+        result.push(
+          String.fromCharCode( codeA + (letterIdx + shift) % abcCount )
+        );
+        counterKey++
+      } else {
+        result.push(text[i]);
+      }
+    }
+     return this.mode === false ? result.reverse().join("") :  result.join('');
+  }
+
+  decrypt(text, key) {
+    if (!text || !key) {throw new Error ("Incorrect arguments!")}
+
+    let kf = Math.ceil(text.length / key.length);
+    key = key.toUpperCase().repeat(kf);
+    text = text.toUpperCase()
+    let codeA = 'A'.charCodeAt(0);
+    let abcCount = 26;
+  
+    let result = [];
+    let counterKey = 0
+    for (let i = 0; i < text.length; i++) {
+      if (text[i].match(/[A-Z]/)) {
+        let letterIdx = text.charCodeAt(i) - codeA;
+        let shift = key.charCodeAt(counterKey) - codeA;
+        counterKey++
+        result.push(
+          String.fromCharCode( codeA + (letterIdx - shift + abcCount) % abcCount )
+        );
+      } else {
+        result.push(text[i]);
+      }
+    }
+  
+    return this.mode === false ? result.reverse().join("") :  result.join('');
   }
 }
